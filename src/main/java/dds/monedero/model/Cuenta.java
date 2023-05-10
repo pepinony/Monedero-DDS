@@ -28,10 +28,10 @@ public class Cuenta {
 
   public void poner(double cuanto) {
     if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
+      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo"); // Duplicated code*
     }
 
-    if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) {
+    if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) { //No cumple con el objetivo, ya q no tiene en cuenta la fecha
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
 
@@ -40,15 +40,15 @@ public class Cuenta {
 
   public void sacar(double cuanto) {
     if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo");
+      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo"); // Duplicated code*
     }
     if (getSaldo() - cuanto < 0) {
-      throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
+      throw new SaldoMenorException("No puede sacar mas de " + this.getSaldo() + " $");
     }
     double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
-    double limite = 1000 - montoExtraidoHoy;
+    double limite = 1000 - montoExtraidoHoy; // Temporary field
     if (cuanto > limite) {
-      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
+      throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000 //
           + " diarios, límite: " + limite);
     }
     new Movimiento(LocalDate.now(), cuanto, false).agregateA(this);
@@ -59,9 +59,9 @@ public class Cuenta {
     movimientos.add(movimiento);
   }
 
-  public double getMontoExtraidoA(LocalDate fecha) {
+  public double getMontoExtraidoA(LocalDate fecha) { // Message Chains
     return getMovimientos().stream()
-        .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha))
+        .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha)) //Duplicated code **
         .mapToDouble(Movimiento::getMonto)
         .sum();
   }

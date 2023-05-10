@@ -24,11 +24,11 @@ public class Movimiento {
     return fecha;
   }
 
-  public boolean fueDepositado(LocalDate fecha) {
+  public boolean fueDepositado(LocalDate fecha) { //Metodo q no se usa
     return isDeposito() && esDeLaFecha(fecha);
   }
 
-  public boolean fueExtraido(LocalDate fecha) {
+  public boolean fueExtraido(LocalDate fecha) { //Metodo q no se usa
     return isExtraccion() && esDeLaFecha(fecha);
   }
 
@@ -36,7 +36,7 @@ public class Movimiento {
     return this.fecha.equals(fecha);
   }
 
-  public boolean isDeposito() {
+  public boolean isDeposito() { 
     return esDeposito;
   }
 
