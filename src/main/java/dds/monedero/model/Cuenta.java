@@ -28,7 +28,7 @@ public class Cuenta {
 
   public void poner(double cuanto) {
     this.montoNegativo(cuanto);
-    if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) { //No cumple con el objetivo, ya q no tiene en cuenta la fecha
+    if (getMovimientos().stream().filter(movimiento -> movimiento.esDepositoDelDia()).count() >= 3) { 
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
 
