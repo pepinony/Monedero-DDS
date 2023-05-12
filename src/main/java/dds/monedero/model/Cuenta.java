@@ -27,10 +27,7 @@ public class Cuenta {
   }
 
   public void poner(double cuanto) {
-    if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo"); // Duplicated code*
-    }
-
+    this.montoNegativo(cuanto);
     if (getMovimientos().stream().filter(movimiento -> movimiento.isDeposito()).count() >= 3) { //No cumple con el objetivo, ya q no tiene en cuenta la fecha
       throw new MaximaCantidadDepositosException("Ya excedio los " + 3 + " depositos diarios");
     }
@@ -39,9 +36,7 @@ public class Cuenta {
   }
 
   public void sacar(double cuanto) {
-    if (cuanto <= 0) {
-      throw new MontoNegativoException(cuanto + ": el monto a ingresar debe ser un valor positivo"); // Duplicated code*
-    }
+    this.montoNegativo(cuanto);
     if (getSaldo() - cuanto < 0) {
       throw new SaldoMenorException("No puede sacar mas de " + this.getSaldo() + " $");
     }
@@ -61,9 +56,15 @@ public class Cuenta {
 
   public double getMontoExtraidoA(LocalDate fecha) { // Message Chains
     return getMovimientos().stream()
-        .filter(movimiento -> !movimiento.isDeposito() && movimiento.getFecha().equals(fecha)) //Duplicated code **
+        .filter(movimiento -> movimiento.isExtraccion() && movimiento.esDeLaFecha(fecha)) 
         .mapToDouble(Movimiento::getMonto)
         .sum();
+  }
+
+  private void montoNegativo(double monto){
+    if (monto <= 0) {
+      throw new MontoNegativoException(monto + ": el monto a ingresar debe ser un valor positivo");
+    }
   }
 
   public List<Movimiento> getMovimientos() {
