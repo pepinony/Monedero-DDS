@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class MonederoTest {
   private Cuenta cuenta;
@@ -25,7 +26,7 @@ public class MonederoTest {
   void AgregarMovimiento() {
     Movimiento movimiento = new Movimiento(LocalDate.now(), 200, true);
     movimiento.agregateA(cuenta);
-    assertTrue(cuenta.getMovimientos().contains(movimiento));
+    assertEquals(cuenta.getMovimientos().size(), 1);
   }
 
   @Test

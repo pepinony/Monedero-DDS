@@ -49,7 +49,22 @@ public class Movimiento {
     }
   }
   
-  public boolean esDepositoDelDia(){
-    return this.isDeposito() && this.esDeLaFecha(LocalDate.now());
+  public boolean esDelTipoYFecha(Setter tipo, LocalDate fecha){
+    return tipo.call(this) && this.esDeLaFecha(fecha);
+  }
+}
+
+interface Setter{
+  public boolean call(Movimiento object);
+}
+
+class Deposito implements Setter{
+  public boolean call(Movimiento object){
+    return object.isDeposito();
+  }
+}
+class Extraccion implements Setter{
+  public boolean call(Movimiento object){
+    return object.isExtraccion();
   }
 }
