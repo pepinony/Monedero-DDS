@@ -43,7 +43,7 @@ public class MonederoTest {
   
   }
   @Test
-  void MontoExtraido(){
+  void MontoExtraidoEnFecha(){
     cuenta.setSaldo(1000);
     cuenta.sacar(300);
     cuenta.sacar(300);
